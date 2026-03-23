@@ -134,7 +134,7 @@ Matplotlib
 ReportLab (PDF generation)
 ▶️ How to Run
 1. Clone Repository
-git clone https://github.com/ThilagarajiDiaMark.git
+git clone https://github.com/Thilagaraji/DiaMark
 cd DiaMark
 2. Create Virtual Environment
 python -m venv .venv
