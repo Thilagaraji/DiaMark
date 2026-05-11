@@ -1,32 +1,40 @@
 import numpy as np
 
+
 def fuzzy_risk(probability):
     """
-    Convert ML probability into fuzzy diabetes risk + confidence
+    Convert ML probability (must be in [0, 1]) into a fuzzy
+    diabetes risk level and a human-readable confidence percentage.
+
+    Returns:
+        {
+            "risk":        "LOW" | "MEDIUM" | "HIGH",
+            "confidence":  float  (0–100, percentage),
+            "probability": float  (0–100, percentage)
+        }
     """
+    probability = float(np.clip(probability, 0.0, 1.0))
 
-    probability = float(probability)
-
-    # LOW RISK
     if probability < 0.4:
-        risk = "LOW"
-        confidence = 1 - (probability / 0.4)
+        risk       = "LOW"
+        # confidence rises as probability falls toward 0
+        confidence = 1.0 - (probability / 0.4)
 
-    # MEDIUM RISK
-    elif 0.4 <= probability <= 0.7:
-        risk = "MEDIUM"
-        confidence = 1 - abs(probability - 0.55) / 0.15
+    elif probability <= 0.7:
+        risk       = "MEDIUM"
+        # confidence peaks at the centre of the medium band (0.55)
+        confidence = 1.0 - abs(probability - 0.55) / 0.15
 
-    # HIGH RISK
     else:
-        risk = "HIGH"
+        risk       = "HIGH"
+        # confidence rises as probability rises toward 1
         confidence = (probability - 0.7) / 0.3
 
-    # Clamp values between 0 and 1
-    confidence = max(0, min(confidence, 1))
+    # Hard clamp – confidence must never exceed 100 %
+    confidence = float(np.clip(confidence, 0.0, 1.0))
 
     return {
-        "risk": risk,
-        "confidence": round(confidence * 100, 2),  # convert to %
-        "probability": round(probability * 100, 2)
+        "risk":        risk,
+        "confidence":  round(confidence * 100, 2),   # e.g. 87.50
+        "probability": round(probability * 100, 2),  # e.g. 34.20
     }

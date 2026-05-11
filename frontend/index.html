@@ -1142,7 +1142,7 @@
     document.getElementById('r-level').textContent = level;
     document.getElementById('r-level').className = 's-value ' + cls;
 
-    document.getElementById('r-prob').textContent = (prob * 100).toFixed(2) + '%';
+    document.getElementById('r-prob').textContent = prob.toFixed(2) + '%';
     document.getElementById('r-prob').className = 's-value ' + cls;
 
     document.getElementById('r-badge').innerHTML =
@@ -1151,7 +1151,7 @@
     const bar = document.getElementById('r-bar');
     const color = cls === 'low' ? 'var(--safe)' : cls === 'medium' ? 'var(--warn)' : 'var(--danger)';
     bar.style.background = color;
-    bar.style.width = Math.min(prob * 100, 100) + '%';
+    bar.style.width = Math.min(prob, 100) + '%';
 
     const rpt = document.getElementById('r-report');
 

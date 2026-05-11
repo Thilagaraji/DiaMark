@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-from fingerprint_enhancer import enhance_fingerprint
 
 def extract_features(img):
     """
